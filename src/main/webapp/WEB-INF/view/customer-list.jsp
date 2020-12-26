@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Customer list</title>
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css"/>
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/style.css" />
 </head>
 <body>
 	<div id="wrapper">
@@ -14,21 +15,35 @@
 			<h2>CRM - Customer relationship manager</h2>
 		</div>
 	</div>
-
+	<br>
+	<br>
 	<div id="container">
+		<input type="button" value="Add Customer"
+			onClick="window.location.href='addCustomer'; return false;" />
 		<div id="content">
 			<table>
 				<tr>
 					<th>First name</th>
 					<th>Last name</th>
 					<th>Email</th>
+					<th>Action</th>
 				</tr>
 				<c:forEach var="temp" items="${customer}">
-				<tr>
-					<td>${temp.firstName}</td>
-					<td>${temp.lastName}</td>
-					<td>${temp.email}</td>
-				</tr>
+					<c:url var="updateLink" value="/customer/updateForm">
+						<c:param name="customerId" value="${temp.id}" />
+					</c:url>
+					<c:url var="deleteLink" value="/customer/delete">
+						<c:param name="customerId" value="${temp.id}" />
+					</c:url>
+					<tr>
+						<td>${temp.firstName}</td>
+						<td>${temp.lastName}</td>
+						<td>${temp.email}</td>
+						<td><a href="${updateLink}"> Update</a>
+						|
+						<a href="${deleteLink}" onClick="if(!(confirm('Are you sure you want to delete?'))) return false"> Delete</a>
+						</td>
+					</tr>
 				</c:forEach>
 			</table>
 		</div>
