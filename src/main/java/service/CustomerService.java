@@ -1,10 +1,10 @@
-package dao;
+package service;
 
 import java.util.List;
 
 import entity.Customer;
 
-public interface CustomerDao {
+public interface CustomerService {
 	
 	public List<Customer> listCustomer();
 
