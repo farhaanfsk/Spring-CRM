@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - .:/test
+      - ./MVCHibernateScript.sql:/docker-entrypoint-initdb.d/MVCHibernateScript.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 14003352
+      MYSQL_USER: fsk
+      MYSQL_PASSWORD: 14003352
+      MYSQL_DATABASE: web_customer_tracker
+  tomcat:
+    container_name: Tomcat
+    image: tomcat:latest
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/test
+      - ./target/HibernateMVC.war:/usr/local/tomcat/webapps/HibernateMVC.war
+    depends_on:
+      - mysql

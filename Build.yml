@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  maven:
+    container_name: Maven-Java
+    image: 'maven:3.5.3-jdk-8-alpine'
+    volumes:
+      - '.:/test'
+      - '~/.m2:/root/.m2'
+    command: mvn -f /test clean install
