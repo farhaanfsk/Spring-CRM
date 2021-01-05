@@ -50,7 +50,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/addCustomerDetails")
-	public String addCUstomerDetail(@RequestParam("customerId") int id, Model model) {
+	public String addCustomerDetail(@RequestParam("customerId") int id, Model model) {
 		Customer c = customerService.getCustomer(id);
 		CustomerDetail cd = customerService.getCustomerDetail(c);
 		model.addAttribute("customerDetail", cd);

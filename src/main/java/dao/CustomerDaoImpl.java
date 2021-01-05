@@ -47,15 +47,16 @@ public class CustomerDaoImpl implements CustomerDao {
 		Query<CustomerDetail> query = session.createQuery("from CustomerDetail where customer_id=:id",
 				CustomerDetail.class);
 		query.setParameter("id", c.getId());
-
+		CustomerDetail customerDetail;
 		try {
-			CustomerDetail customerDetail = query.getSingleResult();
+			customerDetail = query.getSingleResult();
 			System.out.println(customerDetail.toString());
-			return customerDetail;
+			
 		} catch (NoResultException nre) {
-			return new CustomerDetail();
+			customerDetail = new CustomerDetail();
+			customerDetail.setCustomer(c);
 		}
-
+		return customerDetail;
 	}
 
 	@Override
