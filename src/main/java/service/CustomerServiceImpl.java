@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dao.CustomerDao;
 import entity.Customer;
+import entity.CustomerDetail;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -34,7 +35,20 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public void deleteCustomer(int id) {
 		customerDao.deleteCustomer(id);
-		
+
+	}
+
+	@Override
+	@Transactional
+	public CustomerDetail getCustomerDetail(Customer c) {
+		return customerDao.getCustomerDetail(c);
+	}
+
+	@Override
+	@Transactional
+	public void addCustomerDetail(CustomerDetail customer) {
+		customerDao.addCustomerDetail(customer);
+
 	}
 
 }

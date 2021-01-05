@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import entity.Customer;
+import entity.CustomerDetail;
 
 public interface CustomerDao {
 	
@@ -13,4 +14,8 @@ public interface CustomerDao {
 	public Customer getCustomer(int id);
 
 	public void deleteCustomer(int id);
+
+	public CustomerDetail getCustomerDetail(Customer c);
+
+	public void addCustomerDetail(CustomerDetail customerDetail);
 }
