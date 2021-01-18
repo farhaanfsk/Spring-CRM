@@ -1,8 +1,7 @@
 package web;
 
+import java.beans.PropertyVetoException;
 import java.util.Properties;
-
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +16,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Configuration
 @EnableWebMvc
@@ -40,43 +37,35 @@ public class MVCConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
-	
+
 	@Bean
-	public LocalSessionFactoryBean sessionFactory() {
+	public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "controller,dao,entity,service,web" });
+		sessionFactory.setPackagesToScan("entity");
 		sessionFactory.setHibernateProperties(hibernateProperites());
 		return sessionFactory;
 	}
 
 	@Bean
-	public DataSource dataSource() {
-		ComboPooledDataSource dataSource = new ComboPooledDataSource();
-		Properties properties = new Properties();
-		properties.put("driverClass", environment.getProperty("jdbc.driverClass"));
-		properties.put("jdbcUrl", environment.getProperty("jdbc.url"));
-		properties.put("user", environment.getProperty("jdbc.user"));
-		properties.put("password", environment.getProperty("jdbc.password"));
-
-		properties.put("initialPoolSize", environment.getProperty("hibernate.initialPoolSize"));
-		properties.put("minPoolSize", environment.getProperty("hibernate.minPoolSize"));
-		properties.put("maxPoolSize", environment.getProperty("hibernate.maxPoolSize"));
-		properties.put("maxIdleTime", environment.getProperty("hibernate.maxIdleTime"));
-		dataSource.setProperties(properties);
-		return dataSource;
-	}
-
-	@Bean
 	public Properties hibernateProperites() {
 		Properties properties = new Properties();
+		properties.put("hibernate.connection.driver_class", environment.getProperty("jdbc.driverClass"));
+		properties.put("hibernate.connection.url", environment.getProperty("jdbc.url"));
+		properties.put("hibernate.connection.username", environment.getProperty("jdbc.user"));
+		properties.put("hibernate.connection.password", environment.getProperty("jdbc.password"));
+
+		properties.put("hibernate.c3p0.acquire_increment", environment.getProperty("hibernate.initialPoolSize"));
+		properties.put("hibernate.c3p0.min_size", environment.getProperty("hibernate.minPoolSize"));
+		properties.put("hibernate.c3p0.max_size", environment.getProperty("hibernate.maxPoolSize"));
+		properties.put("hibernate.c3p0.timeout", environment.getProperty("hibernate.maxIdleTime"));
+		
 		properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
 		properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
 		return properties;
 	}
 
 	@Bean
-	public HibernateTransactionManager getTransactionManager() {
+	public HibernateTransactionManager getTransactionManager() throws PropertyVetoException {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
 		return transactionManager;
