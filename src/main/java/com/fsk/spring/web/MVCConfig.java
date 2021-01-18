@@ -1,4 +1,4 @@
-package web;
+package com.fsk.spring.web;
 
 import java.beans.PropertyVetoException;
 import java.util.Properties;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({ "controller,dao,entity,service" })
+@ComponentScan({ "com.fsk.spring" })
 @EnableTransactionManagement
 @PropertySource("classpath:database.properties")
 public class MVCConfig implements WebMvcConfigurer {
@@ -41,7 +41,7 @@ public class MVCConfig implements WebMvcConfigurer {
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setPackagesToScan("entity");
+		sessionFactory.setPackagesToScan("com.fsk.spring.entity");
 		sessionFactory.setHibernateProperties(hibernateProperites());
 		return sessionFactory;
 	}

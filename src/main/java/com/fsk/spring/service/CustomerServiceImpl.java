@@ -1,4 +1,4 @@
-package service;
+package com.fsk.spring.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dao.CustomerDao;
-import entity.Customer;
-import entity.CustomerDetail;
+import com.fsk.spring.dao.CustomerDao;
+import com.fsk.spring.entity.Customer;
+import com.fsk.spring.entity.CustomerDetail;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

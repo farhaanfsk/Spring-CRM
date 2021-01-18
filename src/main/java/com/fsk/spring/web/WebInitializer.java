@@ -1,4 +1,4 @@
-package web;
+package com.fsk.spring.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

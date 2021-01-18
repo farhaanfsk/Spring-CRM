@@ -1,4 +1,4 @@
-package dao;
+package com.fsk.spring.dao;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import entity.Customer;
-import entity.CustomerDetail;
+import com.fsk.spring.entity.Customer;
+import com.fsk.spring.entity.CustomerDetail;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {

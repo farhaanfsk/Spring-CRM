@@ -1,4 +1,4 @@
-package entity;
+package com.fsk.spring.entity;
 
 import java.util.Date;
 

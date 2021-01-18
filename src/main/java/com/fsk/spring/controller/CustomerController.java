@@ -1,4 +1,4 @@
-package controller;
+package com.fsk.spring.controller;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import entity.Customer;
-import entity.CustomerDetail;
-import service.CustomerService;
+import com.fsk.spring.entity.Customer;
+import com.fsk.spring.entity.CustomerDetail;
+import com.fsk.spring.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
