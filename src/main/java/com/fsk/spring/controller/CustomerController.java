@@ -18,13 +18,17 @@ import com.fsk.spring.service.CustomerService;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
+	
+	public CustomerController() {
+		
+	}
+
 	@Autowired
 	public CustomerService customerService;
 
 	@GetMapping("/list")
 	public String listCustomer(Model model) {
 		List<Customer> customers = customerService.listCustomer();
-		System.out.println(customers);
 		model.addAttribute("customer", customers);
 		return "customer-list";
 	}

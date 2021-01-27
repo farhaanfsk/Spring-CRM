@@ -6,7 +6,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - .:/test
+      - .:/Spring-CRM
       - ./MVCHibernateScript.sql:/docker-entrypoint-initdb.d/MVCHibernateScript.sql
     environment:
       MYSQL_ROOT_PASSWORD: 14003352
@@ -14,13 +14,13 @@ services:
       MYSQL_PASSWORD: 14003352
       MYSQL_DATABASE: web_customer_tracker
   tomcat:
-    container_name: Tomcat
+    container_name: tomcat
     image: tomcat:latest
     restart: always
     ports:
       - 8080:8080
     volumes:
-      - .:/test
+      - .:/Spring-CRM
       - ./target/HibernateMVC.war:/usr/local/tomcat/webapps/HibernateMVC.war
     depends_on:
       - mysql
