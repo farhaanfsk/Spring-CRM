@@ -1,29 +1,28 @@
-Configutation:
-  name: Default
-  Properties:
-    Property:
-      name: log-path
-      value: '/Spring-CRM/logs'
-  Appenders:
+Configuration:
+  status: warn
+
+  appenders:
     Console:
-      name: Console_Appender
-      target: SYSTEM_OUT
+      name: LogToConsole
       PatternLayout:
-        pattern: '[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n'
+        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        
     File:
-      name: File_Appender
-      fileName: '${log-path}/logfile.log'
+      name: File
+      fileName: /Spring-CRM/logs/app.log
       PatternLayout:
-        pattern: '[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n'
+        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+
   Loggers:
+    logger:
+      - name: com.fsk
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: LogToConsole
+          - ref: File
+
     Root:
       level: info
       AppenderRef:
-        - ref: Console_Appender
-        - ref: File_Appender
-    Logger:
-      - name: HibernateMVC
-        level: debug
-        AppenderRef:
-          - ref: File_Appender
-          - ref: Console_Appender
+        ref: LogToConsole
