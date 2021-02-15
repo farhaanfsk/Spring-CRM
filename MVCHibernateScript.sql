@@ -33,3 +33,31 @@ insert into customer_detail value(102,'abc def efg', '2020-01-01 10:10:10+05:30'
 insert into customer_detail value(103,'abc def efg', '2020-01-01 10:10:10+05:30',3);
 insert into customer_detail value(104,'abc def efg', '2020-01-01 10:10:10+05:30',4);
 insert into customer_detail value(105,'abc def efg', '2020-01-01 10:10:10+05:30',5);
+
+CREATE TABLE users (
+  username VARCHAR(50) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  enabled TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (username)
+);
+
+
+CREATE TABLE authorities (
+  username VARCHAR(50) NOT NULL,
+  authority VARCHAR(50) NOT NULL,
+  FOREIGN KEY (username) REFERENCES users(username)
+);
+
+CREATE UNIQUE INDEX ix_auth_username
+  on authorities (username,authority);
+  
+INSERT INTO users values ('fsk','{noop}fsk',1);
+INSERT INTO users values ('admin','{noop}admin',1);
+INSERT INTO users values ('customer','{noop}test',1);
+
+INSERT INTO authorities values ('customer', 'ROLE_CUSTOMER');
+INSERT INTO authorities values ('fsk', 'ROLE_CUSTOMER');
+INSERT INTO authorities values ('admin', 'ROLE_CUSTOMER');
+INSERT INTO authorities values ('fsk', 'ROLE_EMPLOYEE');
+INSERT INTO authorities values ('admin', 'ROLE_EMPLOYEE');
+INSERT INTO authorities values ('admin', 'ROLE_ADMIN');

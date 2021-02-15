@@ -13,6 +13,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import com.fsk.spring.entity.Customer;
+
 @Aspect
 @Component
 public class loggingAspect {
@@ -45,7 +47,7 @@ public class loggingAspect {
 			LOGGER.info("Before method arguments {}", arg);
 	}
 
-	@AfterReturning(pointcut = "controllerAllMethods() || serviceAllMethods()", returning = "result")
+	@AfterReturning(pointcut = "controllerAllMethods()", returning = "result")
 	public void AfterReturningcontroller(JoinPoint jp, String result) {
 		LOGGER.info("===>After returning method {}", jp.getSignature().toShortString());
 		LOGGER.info("returned value {}", result);
@@ -72,5 +74,13 @@ public class loggingAspect {
 		LOGGER.info("===>After proceeding Time = {}", end);
 		LOGGER.info("===>Execution Time = {}", end - start);
 		return object;
+	}
+
+	@Before("(execution(* com.fsk.spring.dao.CustomerDaoImpl.addCustomer(..)) && args(customer))")
+	public void generateEmailForCustomer(JoinPoint jp, Customer customer) throws Throwable {
+		LOGGER.info("===>Around method{}", jp.getSignature().toShortString());
+		StringBuilder sb = new StringBuilder(customer.getFirstName()).append(".").append(customer.getLastName())
+				.append("@fskmail.com");
+		customer.setEmail(sb.toString());
 	}
 }
